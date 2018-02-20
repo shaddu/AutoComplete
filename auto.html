@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>jQuery Autocomplete</title>
+    <style>
+        #res {
+            margin: 0px;
+            padding-left: 0px;
+            width: 150px;
+        }
+
+        #res li {
+            list-style-type: none;
+        }
+
+        #res li:hover {
+            background: #110D3B;
+            color: #FFF;
+            cursor: pointer;
+        }
+    </style>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+</head>
+
+<body>
+    <input id="search" type="text">
+    <div id="result" />
+
+</body>
+<script>
+    document.getElementById("search").onkeyup = debounce(inputSpy, 100, true);
+
+    function inputSpy(event) {
+        askForSuggestions(event.target.value, outputResults);
+    }
+
+    function outputResults(response_text) {
+        var result_display = document.getElementById("result");
+        result_display.innerHTML = response_text;
+    }
+
+    function askForSuggestions(input_text, result_processor) {
+        var people = ['Peter Bishop', 'Nicholas Brody', 'Gregory House', 'Hank Lawson', 'Tyrion Lannister',
+            'Nucky Thompson'
+        ];
+
+        var results = $.grep(people, function (item) {
+            return item.search(RegExp(input_text, "i")) != -1;
+        });
+        result_processor(results);
+
+    }
+
+    function debounce(func, wait, immediate) {
+        var timeout, result;
+        return function () {
+            var context = this,
+                args = arguments;
+            var later = function () {
+                timeout = null;
+                if (!immediate) result = func.apply(context, args);
+            };
+            var callNow = immediate && !timeout;
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+            if (callNow) result = func.apply(context, args);
+            return result;
+        };
+    }
+</script>
+
+</html>
