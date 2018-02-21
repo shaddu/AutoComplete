@@ -1,16 +1,10 @@
 function Auto(id, timeout, immediate) {
     document.getElementById(id).onkeyup = debounce(inputSpy, timeout, immediate);
     document.getElementById(id).onfocus = debounce(inputSpy, timeout, immediate);
-    document.getElementById(id).onblur = clear();
-
-
-    function clear() {
-        document.getElementById(id + "-suggestions").innerHTML = "";
-    }
 
     var trie = createTrie();
     _data.forEach(function (e) {
-        console.log(e.name)
+        //console.log(e.name)
         trie.insert(e.name);
     });
 
