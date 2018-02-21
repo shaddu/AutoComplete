@@ -1,3 +1,4 @@
+(function() {
 document.getElementById("search").onkeyup = debounce(inputSpy, 100, true);
 
 function inputSpy(event) {
@@ -10,18 +11,16 @@ function outputResults(response_text) {
 }
 
 function askForSuggestions(input_text, result_processor) {
-    // var data = 'data.json';
-    // var _data = JSON.parse(data);
-    console.log(_data.name);
-
-    var people = ['Peter Bishop', 'Nicholas Brody', 'Gregory House', 'Hank Lawson', 'Tyrion Lannister',
-        'Nucky Thompson'
-    ];
-
-    var results = $.grep(people, function (item) {
-        return item.search(RegExp(input_text, "i")) != -1;
+    var trie = createTrie();
+    _data.forEach(function(e){
+        console.log(e.name)
+        trie.insert(e.name);
     });
-    result_processor(results);
+
+    var list = trie.autoComplete(input_text);
+    //list.forEach(function(e))
+   
+    result_processor(list);
 
 }
 
@@ -41,3 +40,4 @@ function debounce(func, wait, immediate) {
         return result;
     };
 }
+})();
