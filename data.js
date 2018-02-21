@@ -1,4 +1,5 @@
-[
+
+var _data = [
   {
     "job_history": [
       "Sibelius"
